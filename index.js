@@ -7,21 +7,18 @@ const {dbConnection} = require('./database/config');
 //Crear el servidor express
 const app = express();
 
-//configurar corss
+//configurar cors
 app.use(cors());
+
+//lectura y parseo del body
+app.use(express.json());
 
 // Base de datos
 dbConnection();
 
-
-app.get('/', (req, res)=>{
-
-    return res.json({
-        ok: true,
-        msg:'Hola Mundo'
-    })
-
-});
+//Rutas
+app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/login', require('./routes/auth'));
 
 
 app.listen(process.env.PORT, ()=>{
